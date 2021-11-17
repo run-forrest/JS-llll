@@ -43,3 +43,70 @@
 #### 12、void和never
 返回值类型，也算是基础类型。没有返回值的函数: void
 如果一个函数是永远也执行不完的，就可以定义返回值为 never
+
+#### 13、类型检测
+1、typeof
+typeof 操作符可以用来获取一个变量或对象的类型
+2、instanceof
+3、keyof
+keyof 与 Object.keys 略有相似，只不过 keyof 取 interface 的键
+
+用 keyof 可以更好的定义数据类型
+
+function get<T extends object, K extends keyof T>(o: T, name: K): T[K] {
+  return o[name]
+}
+
+#### 14、ts类里的关键字
+
+public
+private 类的外部不可用，继承也不行
+protected 类的外部不可用，继承可以
+public readOnly xxx 只读属性
+static funcXXX 静态方法，不需要 new 就可以调用
+abstract funcXXX 抽象类，所有子类都必须要实现 funcXXX
+
+### 五、tsconfig
+需要去了解 tsconfig.json 中一些参数的说明，具体参考官方文档tsconfig.json
+
+1、作用：
+
+用于标识 TypeScript 项目的根路径；
+用于配置 TypeScript 编译器；
+用于指定编译的文件。
+
+2、注意事项：
+
+tsc -init 生成 tsconfig.json，项目目录下直接 tsc,编译的时候就会走配置文件
+compilerOptions 内部字段含义
+项目别名配置：遇到过的一个坑，仅在项目config中配置别名不生效，需要在tsconfig.json中再配置一遍
+
+
+### 六、Utility Types
+Utility Types： 可以理解为基于ts封装的工具类型;
+
+#### 1、Partial<T>
+将T中所有属性转换为可选属性。返回的类型可以是T的任意子集
+export interface UserModel {
+  name: string;
+  age?: number;
+  sex: number;
+}
+
+type JUserModel = Partial<UserModel>
+// =
+type JUserModel = {
+    name?: string | undefined;
+    age?: number | undefined;
+    sex?: number | undefined;
+}
+
+#### 2、Required<T>
+通过将T的所有属性设置为必选属性来构造一个新的类型。与Partial相反
+#### 3、Readonly<T>
+将T中所有属性设置为只读
+  
+ #### 4、Record<K,T>
+构造一个类型，该类型具有一组属性K，每个属性的类型为T。可用于将一个类型的属性映射为另一个类型。Record 后面的泛型就是对象键和值的类型。
+
+简单理解：K对应对应的key，T对应对象的value，返回的就是一个声明好的对象
