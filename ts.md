@@ -110,3 +110,11 @@ type JUserModel = {
 构造一个类型，该类型具有一组属性K，每个属性的类型为T。可用于将一个类型的属性映射为另一个类型。Record 后面的泛型就是对象键和值的类型。
 
 简单理解：K对应对应的key，T对应对象的value，返回的就是一个声明好的对象
+  
+ #### ReturnType<T>
+function T的返回类型
+type T0 = ReturnType<() => string>;  // string
+
+type T1 = ReturnType<(s: string) => void>;  // void
+
+
